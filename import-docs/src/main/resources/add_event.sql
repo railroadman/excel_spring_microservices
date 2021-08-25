@@ -1,0 +1,4 @@
+INSERT [dbo].[Event] ( [documentId], [stateId], [customerId], [isDeleted], [updateData], [version]) VALUES ( 20149, 3, 1111, 0, CAST(N'2021-08-13T16:37:23.5815029+03:00' AS DateTimeOffset), 2)
+INSERT [dbo].[Event] ( [documentId], [stateId], [customerId], [isDeleted], [updateData], [version]) VALUES ( 20150, 0, 1111, 0, CAST(N'2021-08-13T16:41:43.2971731+03:00' AS DateTimeOffset), 4)
+INSERT [dbo].[Event] ( [documentId], [stateId], [customerId], [isDeleted], [updateData], [version]) VALUES ( 20151, 0, 1111, 0, CAST(N'2021-08-13T17:00:30.4654703+03:00' AS DateTimeOffset), 5)
+INSERT [dbo].[Event] ( [documentId], [stateId], [customerId], [isDeleted], [updateData], [version]) VALUES ( 20152, 3, 1111, 0, CAST(N'2021-08-13T17:26:00.4540412+03:00' AS DateTimeOffset), 2)
