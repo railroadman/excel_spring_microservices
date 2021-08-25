@@ -59,7 +59,7 @@ public class ParserService {
 
 //    @Scheduled(cron = "* */30 * * * *")
 
-        //@Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 10000)
     public void parseDocuments() throws IOException {
         System.out.println("ParseDocument Started");
         List<DocumentStatusDto> dtoStatuses = new ArrayList<>();
