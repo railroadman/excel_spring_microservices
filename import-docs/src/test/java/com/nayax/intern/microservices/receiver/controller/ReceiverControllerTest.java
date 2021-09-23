@@ -1,13 +1,10 @@
 package com.nayax.intern.microservices.receiver.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.nayax.intern.microservices.receiver.dto.EventDto;
 import com.nayax.intern.microservices.receiver.dto.RequestDto;
-import com.nayax.intern.microservices.receiver.dto.ResponseDto;
-import com.nayax.intern.microservices.receiver.entity.EventEntity;
-import com.nayax.intern.microservices.receiver.enums.ResponseStatusEnum;
 import com.nayax.intern.microservices.receiver.enums.StateTypeEnum;
-import com.nayax.intern.microservices.receiver.mapper.DocumentMapper;
 import com.nayax.intern.microservices.receiver.mapper.EventMapper;
 import com.nayax.intern.microservices.receiver.repository.EventDao;
 import com.nayax.intern.microservices.receiver.service.DocumentService;
@@ -15,29 +12,21 @@ import com.nayax.intern.microservices.receiver.service.EventService;
 import com.nayax.intern.microservices.receiver.utils.EventFilter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
-import static org.apache.commons.collections4.ListUtils.emptyIfNull;
-import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -75,12 +64,15 @@ class ReceiverControllerTest {
     @Test
     @DisplayName("select events using filters")
     void getWithParametr() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
         EventFilter filter = new EventFilter(0, StateTypeEnum.NEW);
         EventDto eventDto = new EventDto(1231L, 21212L, "NEW");
         when(eventService.getWithParams(filter)).thenReturn(List.of(eventDto));
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/receiver/events").param("isDeleted", "0")
-                .param("state", "NEW")).andExpect(status().isOk()).andReturn();
+        String filterJson = mapper.writeValueAsString(filter);
+        Map<String, String> formParams = toFormParams(filter,Set.of("dd"));
+                MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/receiver/events").content(filterJson)
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                                    .andExpect(status().isOk()).andReturn();
 
         logger.info(mvcResult.getResponse().getContentAsString());
         verify(eventService, times(1)).getWithParams(refEq(filter));
@@ -119,4 +111,14 @@ class ReceiverControllerTest {
     }
 
 
+
+    private Map<String, String> toFormParams(Object o, Set<String> excludeFields) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectReader reader = objectMapper.readerFor(Map.class);
+
+        Map<String, String> map = reader.readValue(objectMapper.writeValueAsString(o));
+        return map;
+
+
+    }
 }

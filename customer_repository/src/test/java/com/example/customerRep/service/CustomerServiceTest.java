@@ -15,4 +15,16 @@ public class CustomerServiceTest {
     @Test
     void saveMerge() {
     }
+
+    @Test
+    void testSave() {
+    }
+
+    @Test
+    void testSaveMerge() {
+    }
+
+    @Test
+    void getCustomers() {
+    }
 }

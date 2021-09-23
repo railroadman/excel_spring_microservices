@@ -1,0 +1,82 @@
+version: '3.7'
+
+services:
+
+  customerrepository:
+    image: excel_micro/customer-repository
+    ports:
+    - 62100:52100
+    depends_on:
+      - document_manager
+    
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:sqlserver://database:1433;DatabaseName=importDocs3
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=pepper2k12KK21_212O
+      
+
+  itemrepository:
+    image: excel_micro/item-repository
+    ports:
+    - 63100:53100
+    depends_on:
+      - receiver
+    
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:sqlserver://database:1433;DatabaseName=importDocs3
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=pepper2k12KK21_212O
+      
+
+  document_manager:
+    image: excel_micro/document-manager
+    ports:
+    - 61100:51100
+    depends_on:
+      - receiver
+    
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:sqlserver://database:1433;DatabaseName=importDocs3
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=pepper2k12KK21_212O
+      - NAYAX_MICROSERVICES_RECEIVER_URL=http://receiver:50100
+      - NAYAX_MICROSERVICES_CUSTOMERREPOSITORY_URL=customerrepository:52100
+      - NAYAX_MICROSERVICES_ITEMREPOSITORY_URL=itemrepository:53100
+
+
+
+   
+
+  receiver:
+    image: excel_micro/import-docs
+    ports:
+    - 60110:50100
+
+    depends_on:
+      - database
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:sqlserver://database:1433;DatabaseName=importDocs3
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=pepper2k12KK21_212O
+
+  
+  database:
+    build: ./mssql_database
+    ports:
+      - 1453:1433
+    environment:
+      - SA_PASSWORD=pepper2k12KK21_212O
+      - ACCEPT_EULA=Y
+      - TZ=UTC
+    volumes:
+      - database-data:/var/opt/mssql
+  
+
+
+volumes:
+  database-data:
+  
+
+
+
+  
