@@ -30,6 +30,10 @@ public class RequestDto {
         this.documentType = documentType;
     }
 
+    public RequestDto() {
+
+    }
+
     public Long getCustomerId() {
         return customerId;
     }

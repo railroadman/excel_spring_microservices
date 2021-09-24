@@ -13,6 +13,7 @@ import java.util.List;
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EventMapper {
                @Mapping(target="documentId",source = "entity.documentId")
+               @Mapping(target="stateId",source = "entity.state")
                @Mapping(target="id",source="entity.id")
 
                EventDto EventEntitytoEventDto(EventEntity entity);

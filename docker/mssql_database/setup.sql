@@ -1,7 +1,3 @@
-DROP DATABASE importDocs3;
-
-GO
-
 CREATE DATABASE importDocs3
 GO
 USE [importDocs3]

@@ -22,6 +22,7 @@ public class DocumentJDBCTemplate implements DocumentDao {
     NamedParameterJdbcTemplate parameterJdbcTemplate;
     @Override
     public List<Document> getDocumentByIds(List<Long> id) {
+
         MapSqlParameterSource params = new MapSqlParameterSource();
         final String SQL = "  select d.id,d.docValue,dt.type AS DateType,ct.type AS ContetntType,e.customerId AS customerId from Document d\n" +
                 "join DataType dt on dt.id = d.idDataType\n" +

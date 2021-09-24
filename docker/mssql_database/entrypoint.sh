@@ -1,1 +1,1 @@
-/opt/mssql/bin/sqlservr && /usr/src/app/import-data.sh && /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $password
+/opt/mssql/bin/sqlservr && /usr/src/app/import-data.sh && /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P pepper2k12KK21_212O

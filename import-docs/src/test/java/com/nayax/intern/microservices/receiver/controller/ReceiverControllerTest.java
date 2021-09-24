@@ -1,3 +1,4 @@
+/*
 package com.nayax.intern.microservices.receiver.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -121,4 +122,4 @@ class ReceiverControllerTest {
 
 
     }
-}
+}*/

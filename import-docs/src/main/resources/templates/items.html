@@ -1,0 +1,75 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head th:replace="fragments/head.html :: head"></head>
+
+<body>
+<header th:replace="fragments/top_nav.html :: navbar"></header>
+
+<div class="container-fluid" id="container">
+
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="list-group">
+                <a href="/" class="list-group-item list-group-item-action ">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Tasks</h5>
+
+                    </div>
+
+                </a>
+                <a href="/file" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Add file</h5>
+                    </div>
+
+                </a>
+                <a href="/items" class="list-group-item list-group-item-action active">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Item Data</h5>
+
+                    </div>
+
+                </a>
+
+
+            </div>
+        </div>
+        <div class="col-lg-10">
+
+            <table class="table" >
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">CustomeId</th>
+                    <th scope="col">isDeleted</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="item: ${items}">
+
+                    <td class="col-lg-2" th:text="${item.id}"></td>
+                    <td class="col-lg-2" th:text="${item.code}"></td>
+                    <td class="col-lg-2" th:text="${item.description}"></td>
+                    <td class="col-lg-3" th:text="${item.customerId}"></td>
+                    <td class="col-lg-3" th:text="${item.isDeleted}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<footer th:replace="fragments/footer :: footer">
+
+</footer>
+</body>
+
+</html>

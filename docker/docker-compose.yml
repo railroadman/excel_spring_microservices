@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   customerrepository:
-    image: excel_micro/customer-repository
+    image: railroadman22k/customer-repository
     ports:
     - 62100:52100
     depends_on:
@@ -16,7 +16,7 @@ services:
       
 
   itemrepository:
-    image: excel_micro/item-repository
+    image: railroadman22k/item-repository
     ports:
     - 63100:53100
     depends_on:
@@ -29,7 +29,7 @@ services:
       
 
   document_manager:
-    image: excel_micro/document-manager
+    image: railroadman22k/document-manager
     ports:
     - 61100:51100
     depends_on:
@@ -45,12 +45,10 @@ services:
 
 
 
-   
-
   receiver:
-    image: excel_micro/import-docs
+    image: railroadman22k/import-docs
     ports:
-    - 60110:50100
+      - 60110:50100
 
     depends_on:
       - database
@@ -61,7 +59,7 @@ services:
 
   
   database:
-    build: ./mssql_database
+    image: railroadman22k/mssql_with_db
     ports:
       - 1453:1433
     environment:

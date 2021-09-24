@@ -6,6 +6,7 @@ public class EventDto {
 
     private long id;
     private long documentId;
+    private Integer stateId;
 
 
     public EventDto(){};
@@ -13,6 +14,14 @@ public class EventDto {
         this.documentId = documentId;
         this.id = id;
 
+    }
+
+    public Integer getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(Integer stateId) {
+        this.stateId = stateId;
     }
 
     public long getDocumentId() {
